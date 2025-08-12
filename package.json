@@ -1,6 +1,6 @@
 {
   "name": "claude-code-voice-notifications",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Intelligent voice notifications for Claude Code using ElevenLabs TTS",
   "main": "dist/hook-handler.js",
   "bin": {

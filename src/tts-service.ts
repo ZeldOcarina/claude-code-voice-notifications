@@ -2,19 +2,26 @@ import { ElevenLabsClient, play } from '@elevenlabs/elevenlabs-js';
 import { config } from './config.js';
 
 export class TTSService {
-  private client: ElevenLabsClient;
+  private client: ElevenLabsClient | null;
   
   constructor() {
-    if (!config.elevenLabs.apiKey) {
-      throw new Error('ELEVENLABS_API_KEY is not set in environment variables');
+    if (config.elevenLabs.apiKey) {
+      this.client = new ElevenLabsClient({
+        apiKey: config.elevenLabs.apiKey,
+      });
+    } else {
+      this.client = null;
+      console.log('ElevenLabs API key not found. Using fallback TTS.');
     }
-    
-    this.client = new ElevenLabsClient({
-      apiKey: config.elevenLabs.apiKey,
-    });
   }
   
   async speak(text: string): Promise<void> {
+    // If no API key, go straight to fallback
+    if (!this.client) {
+      await this.fallbackNotification(text);
+      return;
+    }
+    
     try {
       const audio = await this.client.textToSpeech.convert(
         config.elevenLabs.voiceId,

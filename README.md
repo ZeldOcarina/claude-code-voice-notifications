@@ -53,19 +53,48 @@ When Claude Code:
    npm install -g claude-code-voice-notifications
    ```
 
-2. **Quick setup:**
-   ```bash
-   # Create .env file with your ElevenLabs API key
-   echo "ELEVENLABS_API_KEY=your_api_key_here" > ~/.claude-voice-notifications.env
+2. **Configure API key (optional):**
    
-   # Test the system (uses system TTS fallback, no API key needed)
-   echo '{"hook_event_name": "Stop"}' | claude-voice-notifications
+   Get your free API key from [ElevenLabs](https://elevenlabs.io/app/settings/api-keys), then choose one method:
+   
+   **Option A: Environment Variable (Recommended for npm users)**
+   
+   **For Zsh (.zshrc):**
+   ```bash
+   echo 'export ELEVENLABS_API_KEY="your_api_key_here"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+   
+   **For Bash (.bashrc):**
+   ```bash
+   echo 'export ELEVENLABS_API_KEY="your_api_key_here"' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+   
+   **For Fish (.config/fish/config.fish):**
+   ```bash
+   echo 'set -gx ELEVENLABS_API_KEY "your_api_key_here"' >> ~/.config/fish/config.fish
+   source ~/.config/fish/config.fish
+   ```
+   
+   **Option B: .env File (Good for development)**
+   ```bash
+   echo "ELEVENLABS_API_KEY=your_api_key_here" > ~/.claude-voice-notifications.env
    ```
 
-3. **Configure Claude Code hooks:**
+3. **Test the system:**
+   ```bash
+   # Test with system TTS (no API key needed)
+   echo '{"hook_event_name": "Stop"}' | claude-voice-notifications
+   
+   # Test with ElevenLabs (needs API key)
+   ELEVENLABS_API_KEY="your_key" echo '{"hook_event_name": "Stop"}' | claude-voice-notifications
+   ```
+
+4. **Configure Claude Code hooks:**
    Use the configuration shown below in your `~/.claude/settings.json`
 
-4. **Restart Claude Code** to activate notifications!
+5. **Restart Claude Code** to activate notifications!
 
 #### 🛠️ Option 2: From Source (Development)
 

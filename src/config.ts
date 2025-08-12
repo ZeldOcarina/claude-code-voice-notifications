@@ -3,8 +3,12 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Try to load .env file (for development/GitHub users)
+// This will be silent if .env doesn't exist
 dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
+// Config uses environment variables (supports both .env and system env)
 export const config = {
   elevenLabs: {
     apiKey: process.env.ELEVENLABS_API_KEY || '',
