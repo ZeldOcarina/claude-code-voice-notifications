@@ -30,14 +30,25 @@
   ],
   "author": "Claude Code Community",
   "license": "MIT",
-  "homepage": "https://github.com/yourusername/claude-code-voice-notifications#readme",
+  "homepage": "https://github.com/ZeldOcarina/claude-code-voice-notifications#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/claude-code-voice-notifications.git"
+    "url": "https://github.com/ZeldOcarina/claude-code-voice-notifications.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/claude-code-voice-notifications/issues"
+    "url": "https://github.com/ZeldOcarina/claude-code-voice-notifications/issues"
   },
+  "files": [
+    "src/**/*",
+    "dist/**/*",
+    "examples/**/*",
+    "setup-hooks.sh",
+    "verify-setup.sh",
+    "install.sh",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
   "engines": {
     "node": ">=18.0.0"
   },
