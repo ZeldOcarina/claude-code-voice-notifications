@@ -59,6 +59,5 @@ Thumbs.db
 # TypeScript cache
 *.tsbuildinfo
 
-# Note: pnpm-lock.yaml should be committed for libraries
-# but may be gitignored for applications
-pnpm-lock.yaml
+# Note: pnpm-lock.yaml should be committed for reproducible builds
+# Committing lockfile for this open source project
