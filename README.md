@@ -46,18 +46,14 @@ When Claude Code:
 
 ### Installation
 
-#### 🎯 Option 1: npm (Recommended)
-
-1. **Install globally:**
+1. **Install the package:**
    ```bash
    npm install -g claude-code-voice-notifications
    ```
 
-2. **Configure API key (optional):**
+2. **Configure ElevenLabs API key (optional but recommended):**
    
-   Get your free API key from [ElevenLabs](https://elevenlabs.io/app/settings/api-keys), then choose one method:
-   
-   **Option A: Environment Variable (Recommended for npm users)**
+   Get your free API key from [ElevenLabs](https://elevenlabs.io/app/settings/api-keys), then add it to your shell:
    
    **For Zsh (.zshrc):**
    ```bash
@@ -76,57 +72,20 @@ When Claude Code:
    echo 'set -gx ELEVENLABS_API_KEY "your_api_key_here"' >> ~/.config/fish/config.fish
    source ~/.config/fish/config.fish
    ```
-   
-   **Option B: .env File (Good for development)**
-   ```bash
-   echo "ELEVENLABS_API_KEY=your_api_key_here" > ~/.claude-voice-notifications.env
-   ```
 
-3. **Test the system:**
+3. **Test the installation:**
    ```bash
-   # Test with system TTS (no API key needed)
+   # Test with system TTS (works without API key)
    echo '{"hook_event_name": "Stop"}' | claude-voice-notifications
    
-   # Test with ElevenLabs (needs API key)
-   ELEVENLABS_API_KEY="your_key" echo '{"hook_event_name": "Stop"}' | claude-voice-notifications
+   # Test with ElevenLabs (needs API key configured above)
+   echo '{"hook_event_name": "SubagentStop", "tool_input": {"description": "Test Task"}}' | claude-voice-notifications
    ```
 
 4. **Configure Claude Code hooks:**
-   Use the configuration shown below in your `~/.claude/settings.json`
+   Add the configuration below to your `~/.claude/settings.json`
 
 5. **Restart Claude Code** to activate notifications!
-
-#### 🛠️ Option 2: From Source (Development)
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/ZeldOcarina/claude-code-voice-notifications.git
-   cd claude-code-voice-notifications
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install  # or pnpm install
-   ```
-
-3. **Configure environment:**
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your ElevenLabs API key
-   ```
-
-4. **Test the system:**
-   ```bash
-   npm run test:fallback     # Test system TTS fallback (no API key needed)
-   npm run test              # Test with ElevenLabs (needs API key)
-   ```
-
-5. **Configure Claude Code hooks:**
-   ```bash
-   ./setup-hooks.sh       # Shows configuration
-   ```
-
-6. **Restart Claude Code** to activate the hooks!
 
 ## ⚙️ Configuration
 
@@ -141,9 +100,8 @@ When Claude Code:
 
 ### Claude Code Settings
 
-Add this to your `~/.claude/settings.json`:
+Add this configuration to your `~/.claude/settings.json`:
 
-#### If installed via npm:
 ```json
 {
   "hooks": {
@@ -170,39 +128,6 @@ Add this to your `~/.claude/settings.json`:
       "hooks": [{
         "type": "command",
         "command": "claude-voice-notifications"
-      }]
-    }]
-  }
-}
-```
-
-#### If installed from source:
-```json
-{
-  "hooks": {
-    "Stop": [{
-      "hooks": [{
-        "type": "command",
-        "command": "cd /path/to/claude-code-voice-notifications && npm run start"
-      }]
-    }],
-    "SubagentStop": [{
-      "hooks": [{
-        "type": "command",
-        "command": "cd /path/to/claude-code-voice-notifications && npm run start"
-      }]
-    }],
-    "Notification": [{
-      "hooks": [{
-        "type": "command",
-        "command": "cd /path/to/claude-code-voice-notifications && npm run start"
-      }]
-    }],
-    "PostToolUse": [{
-      "matcher": "Bash|Edit|MultiEdit|Write",
-      "hooks": [{
-        "type": "command",
-        "command": "cd /path/to/claude-code-voice-notifications && npm run start"
       }]
     }]
   }
@@ -211,32 +136,33 @@ Add this to your `~/.claude/settings.json`:
 
 ### Voice Customization
 
-Edit `src/config.ts` to customize:
-
-```typescript
-export const config = {
-  elevenLabs: {
-    voiceId: 'JBFqnCBsd6RMkjVDRZzb', // Change voice
-    modelId: 'eleven_flash_v2_5',     // Ultra-low latency
-    outputFormat: 'mp3_44100_128',    // Audio quality
-  },
-  notifications: {
-    stopMessage: 'Claude has finished responding.',
-    // ... customize all messages
-  },
-};
-```
-
-## 📋 Available Scripts
+You can customize the voice by setting environment variables:
 
 ```bash
-pnpm start              # Run the hook handler
-pnpm test               # Test Stop event
-pnpm test:subagent      # Test SubagentStop event  
-pnpm test:notification  # Test Notification event
-pnpm test:posttool      # Test PostToolUse event
-pnpm test:fallback      # Test system TTS fallback
-pnpm build              # Build TypeScript
+# Use a different voice (get voice IDs from ElevenLabs)
+export ELEVENLABS_VOICE_ID="pNInz6obpgDQGcFmaJgB"  # Adam voice
+
+# Add to your shell config (.zshrc, .bashrc, etc.)
+echo 'export ELEVENLABS_VOICE_ID="pNInz6obpgDQGcFmaJgB"' >> ~/.zshrc
+```
+
+Available voice IDs from ElevenLabs:
+- `JBFqnCBsd6RMkjVDRZzb` - George (default)
+- `pNInz6obpgDQGcFmaJgB` - Adam
+- `21m00Tcm4TlvDq8ikWAM` - Rachel
+- `AZnzlk1XvdvUeBnXmlld` - Domi
+
+## 📋 Testing Commands
+
+```bash
+# Test different events
+echo '{"hook_event_name": "Stop"}' | claude-voice-notifications
+echo '{"hook_event_name": "SubagentStop", "tool_input": {"description": "Test Task"}}' | claude-voice-notifications  
+echo '{"hook_event_name": "Notification", "message": "Claude needs permission"}' | claude-voice-notifications
+echo '{"hook_event_name": "PostToolUse", "tool_name": "Bash", "tool_input": {"command": "npm run build"}}' | claude-voice-notifications
+
+# Test with specific voice
+ELEVENLABS_VOICE_ID="pNInz6obpgDQGcFmaJgB" echo '{"hook_event_name": "Stop"}' | claude-voice-notifications
 ```
 
 ## 🔧 Advanced Configuration
@@ -297,11 +223,13 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ### Development Setup
 
+If you want to contribute or modify the code:
+
 ```bash
-git clone https://github.com/yourusername/claude-code-voice-notifications.git
+git clone https://github.com/ZeldOcarina/claude-code-voice-notifications.git
 cd claude-code-voice-notifications
-pnpm install
-pnpm test:fallback  # Verify setup
+npm install  # or pnpm install
+npm run test  # Verify setup (requires API key)
 ```
 
 ### Adding New Features
@@ -328,7 +256,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 - [Claude Code Documentation](https://docs.anthropic.com/claude-code)
 - [Claude Code Hooks Guide](https://docs.anthropic.com/claude-code/hooks)
 - [ElevenLabs API](https://elevenlabs.io/docs)
-- [Report Issues](https://github.com/yourusername/claude-code-voice-notifications/issues)
+- [Report Issues](https://github.com/ZeldOcarina/claude-code-voice-notifications/issues)
 
 ---
 
