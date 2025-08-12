@@ -40,21 +40,44 @@ When Claude Code:
 ### Prerequisites
 
 - [Claude Code](https://claude.ai/code) installed and configured
-- [Node.js](https://nodejs.org/) 18+ and [pnpm](https://pnpm.io/)
+- [Node.js](https://nodejs.org/) 18+
 - [ElevenLabs API key](https://elevenlabs.io/app/settings/api-keys) (free tier works!)
-- [ffmpeg](https://ffmpeg.org/) for audio playback
+- [ffmpeg](https://ffmpeg.org/) for audio playback (auto-installed on most systems)
 
 ### Installation
 
+#### 🎯 Option 1: npm (Recommended)
+
+1. **Install globally:**
+   ```bash
+   npm install -g claude-code-voice-notifications
+   ```
+
+2. **Quick setup:**
+   ```bash
+   # Create .env file with your ElevenLabs API key
+   echo "ELEVENLABS_API_KEY=your_api_key_here" > ~/.claude-voice-notifications.env
+   
+   # Test the system (uses system TTS fallback, no API key needed)
+   echo '{"hook_event_name": "Stop"}' | claude-voice-notifications
+   ```
+
+3. **Configure Claude Code hooks:**
+   Use the configuration shown below in your `~/.claude/settings.json`
+
+4. **Restart Claude Code** to activate notifications!
+
+#### 🛠️ Option 2: From Source (Development)
+
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/claude-code-voice-notifications.git
+   git clone https://github.com/ZeldOcarina/claude-code-voice-notifications.git
    cd claude-code-voice-notifications
    ```
 
 2. **Install dependencies:**
    ```bash
-   pnpm install
+   npm install  # or pnpm install
    ```
 
 3. **Configure environment:**
@@ -65,15 +88,13 @@ When Claude Code:
 
 4. **Test the system:**
    ```bash
-   pnpm test              # Test basic notification
-   pnpm test:notification # Test permission prompt
-   pnpm test:posttool     # Test tool completion
-   pnpm test:fallback     # Test system TTS fallback
+   npm run test:fallback     # Test system TTS fallback (no API key needed)
+   npm run test              # Test with ElevenLabs (needs API key)
    ```
 
 5. **Configure Claude Code hooks:**
    ```bash
-   ./setup-hooks.sh       # Shows configuration to add to ~/.claude/settings.json
+   ./setup-hooks.sh       # Shows configuration
    ```
 
 6. **Restart Claude Code** to activate the hooks!
@@ -93,32 +114,66 @@ When Claude Code:
 
 Add this to your `~/.claude/settings.json`:
 
+#### If installed via npm:
 ```json
 {
   "hooks": {
     "Stop": [{
       "hooks": [{
         "type": "command",
-        "command": "cd /path/to/claude-code-voice-notifications && pnpm tsx src/hook-handler.ts"
+        "command": "claude-voice-notifications"
       }]
     }],
     "SubagentStop": [{
       "hooks": [{
         "type": "command",
-        "command": "cd /path/to/claude-code-voice-notifications && pnpm tsx src/hook-handler.ts"
+        "command": "claude-voice-notifications"
       }]
     }],
     "Notification": [{
       "hooks": [{
         "type": "command",
-        "command": "cd /path/to/claude-code-voice-notifications && pnpm tsx src/hook-handler.ts"
+        "command": "claude-voice-notifications"
       }]
     }],
     "PostToolUse": [{
       "matcher": "Bash|Edit|MultiEdit|Write",
       "hooks": [{
         "type": "command",
-        "command": "cd /path/to/claude-code-voice-notifications && pnpm tsx src/hook-handler.ts"
+        "command": "claude-voice-notifications"
+      }]
+    }]
+  }
+}
+```
+
+#### If installed from source:
+```json
+{
+  "hooks": {
+    "Stop": [{
+      "hooks": [{
+        "type": "command",
+        "command": "cd /path/to/claude-code-voice-notifications && npm run start"
+      }]
+    }],
+    "SubagentStop": [{
+      "hooks": [{
+        "type": "command",
+        "command": "cd /path/to/claude-code-voice-notifications && npm run start"
+      }]
+    }],
+    "Notification": [{
+      "hooks": [{
+        "type": "command",
+        "command": "cd /path/to/claude-code-voice-notifications && npm run start"
+      }]
+    }],
+    "PostToolUse": [{
+      "matcher": "Bash|Edit|MultiEdit|Write",
+      "hooks": [{
+        "type": "command",
+        "command": "cd /path/to/claude-code-voice-notifications && npm run start"
       }]
     }]
   }
