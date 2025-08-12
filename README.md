@@ -4,9 +4,16 @@
 
 Transform your Claude Code workflow with intelligent voice notifications powered by ElevenLabs TTS. Never miss when Claude finishes a task, needs your permission, or completes important operations.
 
+## 🤖 **100% AI Generated**
+
+> ⚡ **This entire project was built from scratch using Claude Code with 100% AI-generated code!**  
+> From initial concept to production-ready open source package - every line of TypeScript, documentation, configuration, and tooling was created by AI. This showcases the power of Claude Code for end-to-end software development.
+
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![ElevenLabs](https://img.shields.io/badge/ElevenLabs-FF6B35?style=flat-square&logo=elevenlabs&logoColor=white)](https://elevenlabs.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![AI Generated](https://img.shields.io/badge/🤖%20AI%20Generated-100%25-brightgreen?style=flat-square)](https://claude.ai/code)
+[![Built with Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code-blueviolet?style=flat-square)](https://claude.ai/code)
 
 ## ✨ Features
 
@@ -229,6 +236,8 @@ MIT License - see [LICENSE](LICENSE) for details.
 - [Anthropic](https://anthropic.com) for Claude Code and hooks system
 - [ElevenLabs](https://elevenlabs.io) for amazing TTS technology
 - Claude Code community for inspiration and feedback
+
+**Special Note**: This project demonstrates Claude Code's capability for complete software development - from architecture and coding to documentation and DevOps setup, all generated through AI assistance.
 
 ## 🔗 Links
 
