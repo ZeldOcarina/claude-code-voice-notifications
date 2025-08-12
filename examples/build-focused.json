@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /path/to/claude-code-voice-notifications && pnpm tsx src/hook-handler.ts"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /path/to/claude-code-voice-notifications && pnpm tsx src/hook-handler.ts"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /path/to/claude-code-voice-notifications && HOOK_CONTEXT=build pnpm tsx src/hook-handler.ts"
+          }
+        ]
+      }
+    ]
+  }
+}

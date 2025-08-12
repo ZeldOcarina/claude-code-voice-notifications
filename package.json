@@ -1,0 +1,54 @@
+{
+  "name": "claude-code-voice-notifications",
+  "version": "1.0.0",
+  "description": "Intelligent voice notifications for Claude Code using ElevenLabs TTS",
+  "main": "dist/hook-handler.js",
+  "bin": {
+    "claude-voice-notifications": "./dist/hook-handler.js"
+  },
+  "scripts": {
+    "start": "tsx src/hook-handler.ts",
+    "build": "tsc",
+    "dev": "tsx watch src/hook-handler.ts",
+    "test": "echo '{\"hook_event_name\": \"Stop\"}' | tsx src/hook-handler.ts",
+    "test:subagent": "echo '{\"hook_event_name\": \"SubagentStop\", \"tool_name\": \"Task\", \"tool_input\": {\"description\": \"Test Task\"}}' | tsx src/hook-handler.ts",
+    "test:notification": "echo '{\"hook_event_name\": \"Notification\", \"message\": \"Claude needs your permission to use Bash\"}' | tsx src/hook-handler.ts",
+    "test:posttool": "echo '{\"hook_event_name\": \"PostToolUse\", \"tool_name\": \"Bash\", \"tool_input\": {\"command\": \"npm run build\"}}' | tsx src/hook-handler.ts",
+    "test:fallback": "tsx src/test-fallback.ts"
+  },
+  "type": "module",
+  "keywords": [
+    "claude-code",
+    "hooks",
+    "voice-notifications",
+    "tts",
+    "elevenlabs",
+    "accessibility",
+    "productivity",
+    "ai",
+    "automation"
+  ],
+  "author": "Claude Code Community",
+  "license": "MIT",
+  "homepage": "https://github.com/yourusername/claude-code-voice-notifications#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/claude-code-voice-notifications.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/claude-code-voice-notifications/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.9.0",
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.1",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  }
+}

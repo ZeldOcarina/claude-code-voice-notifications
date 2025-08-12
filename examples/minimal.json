@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /path/to/claude-code-voice-notifications && pnpm tsx src/hook-handler.ts"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /path/to/claude-code-voice-notifications && pnpm tsx src/hook-handler.ts"
+          }
+        ]
+      }
+    ]
+  }
+}
